@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>Cadastro de Lead</h1>
-    <form id="lead-form" action="/api/leads" method="POST">
+    <form id="lead-form">
         <label for="nome">Nome:</label>
         <input type="text" id="nome" name="nome" required><br><br>
 
@@ -20,12 +20,15 @@
         <label for="curso">Curso de Interesse:</label>
         <select id="curso" name="curso" required>
             <option value="">Selecione um curso</option>
-            <option value="1">Curso A</option>
-            <option value="2">Curso B</option>
-            <option value="3">Curso C</option>
+            <!-- As opções de curso serão carregadas dinamicamente aqui -->
         </select><br><br>
 
         <button type="submit">Enviar</button>
     </form>
+
+    <!-- Indicador de Carregamento -->
+    <div id="loading" style="display: none;">Enviando...</div>
+
+    <script src="js/lead-form.js"></script>
 </body>
 </html>
