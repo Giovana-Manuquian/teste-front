@@ -75,6 +75,7 @@ document.getElementById('lead-form').addEventListener('submit', async (event) =>
 });
 
 // Função para carregar os cursos dinamicamente
+// Função para carregar os cursos dinamicamente
 async function carregarCursos() {
     // Exibir a mensagem de "Carregando..." enquanto os cursos não são carregados
     const cursoSelect = document.getElementById('curso');
@@ -94,23 +95,32 @@ async function carregarCursos() {
         // Limpar opções anteriores (caso haja)
         cursoSelect.innerHTML = '';
 
-        // Adiciona a opção padrão caso não haja cursos
-        if (cursos.length === 0) {
-            cursoSelect.innerHTML = '<option>Sem cursos disponíveis</option>';
-        }
+        // Adiciona a opção padrão
+        const defaultOption = document.createElement('option');
+        defaultOption.value = '';
+        defaultOption.textContent = 'Selecione um curso';
+        cursoSelect.appendChild(defaultOption);
 
         // Adiciona os cursos ao select
-        cursos.forEach(curso => {
-            const option = document.createElement('option');
-            option.value = curso.id;
-            option.textContent = curso.descricao;
-            cursoSelect.appendChild(option);
-        });
+        if (cursos.length === 0) {
+            // Adiciona uma opção caso não haja cursos
+            const noCoursesOption = document.createElement('option');
+            noCoursesOption.textContent = 'Sem cursos disponíveis';
+            cursoSelect.appendChild(noCoursesOption);
+        } else {
+            cursos.forEach(curso => {
+                const option = document.createElement('option');
+                option.value = curso.id;
+                option.textContent = curso.descricao;
+                cursoSelect.appendChild(option);
+            });
+        }
     } catch (error) {
         console.error('Erro ao carregar cursos:', error);
         cursoSelect.innerHTML = '<option>Erro ao carregar cursos</option>';
     }
 }
+
 
 // Chama a função para carregar os cursos ao carregar a página
 window.onload = carregarCursos;

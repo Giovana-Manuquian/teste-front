@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Aluno</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Matricular Aluno</h1>
+
+        <!-- Exibição dos dados do lead -->
+        <div id="lead-info">
+            <h2>Dados do Lead</h2>
+            <p><strong>Nome:</strong> <span id="lead-nome">Nome do Lead</span></p>
+            <p><strong>E-mail:</strong> <span id="lead-email">Email do Lead</span></p>
+            <p><strong>Telefone:</strong> <span id="lead-telefone">Telefone do Lead</span></p>
+        </div>
+
+        <!-- Formulário de matrícula -->
+        <form id="matricula-form">
+            <h2>Informações da Matrícula</h2>
+
+            <!-- Curso -->
+            <label for="curso">Curso:</label>
+            <select id="curso" name="curso">
+                <option value="">Selecione um curso</option>
+            </select>
+            <br><br>
+
+            <!-- Turma -->
+            <label for="turma">Turma:</label>
+            <select id="turma" name="turma">
+                <option value="">Selecione uma turma</option>
+            </select>
+            <br><br>
+
+            <!-- Botão de Matrícula -->
+            <button type="submit">Matricular</button>
+        </form>
+
+        <div id="loading" style="display:none;">Carregando...</div>
+
+        <!-- Mensagem de sucesso -->
+        <div id="matricula-success" style="display:none;">
+            <h3>Aluno matriculado com sucesso!</h3>
+        </div>
+    </div>
+
+    <script src="matricula.js"></script>
+</body>
+</html>
