@@ -1,24 +1,24 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Carregar cursos e turmas
+    // Carregar cursos
     carregarCursos();
-    
-    // Capturar os dados do lead, para preencher na tela
-    const leadId = 123; // Este é o ID do lead, você pode capturar via query string ou outro método
-    carregarLeadInfo(leadId);
 
-    // Formulário de matrícula
-    document.getElementById("matricula-form").addEventListener("submit", async function (event) {
+    // Formulário de lead
+    document.getElementById("lead-form").addEventListener("submit", async function (event) {
         event.preventDefault();
-        
+        await cadastrarLead();
+    });
+
+    // Botão de matrícula
+    document.getElementById("matricular-button").addEventListener("click", async function () {
         const cursoId = document.getElementById("curso").value;
         const turmaId = document.getElementById("turma").value;
 
         if (!cursoId || !turmaId) {
-            alert("Por favor, selecione um curso e uma turma.");
+            alert("Por favor, selecione um curso e uma turma para matricular.");
             return;
         }
 
-        matricularAluno(leadId, cursoId, turmaId);
+        await matricularAluno(cursoId, turmaId);
     });
 });
 
@@ -29,6 +29,9 @@ async function carregarCursos() {
 
     try {
         const response = await fetch('http://localhost:8085/api/cursos');
+        if (!response.ok) {
+            throw new Error('Erro ao carregar cursos: ' + response.statusText);
+        }
         const cursos = await response.json();
 
         cursoSelect.innerHTML = ''; // Limpar opções
@@ -43,18 +46,22 @@ async function carregarCursos() {
 
     } catch (error) {
         console.error("Erro ao carregar cursos:", error);
-        alert('Erro ao carregar cursos.');
+        alert('Erro ao carregar cursos. Tente novamente mais tarde.');
     }
 }
 
-// Função para carregar as turmas de um curso
+// Função para carregar as turmas
 async function carregarTurmas(cursoId) {
     const turmaSelect = document.getElementById("turma");
     turmaSelect.innerHTML = '<option>Carregando turmas...</option>';
 
     try {
-        const response = await fetch(`http://localhost:8085/api/cursos/${cursoId}/turmas`);
+        const response = await fetch(`http://localhost:8085/api/turmas/curso/${cursoId}/turmas`);
+        if (!response.ok) {
+            throw new Error('Erro ao carregar turmas: ' + response.statusText);
+        }
         const turmas = await response.json();
+        console.log(turmas); // Adicione este log para verificar a resposta
 
         turmaSelect.innerHTML = ''; // Limpar opções
         turmas.forEach(turma => {
@@ -66,50 +73,54 @@ async function carregarTurmas(cursoId) {
 
     } catch (error) {
         console.error("Erro ao carregar turmas:", error);
-        alert('Erro ao carregar turmas.');
+        alert('Erro ao carregar turmas. Tente novamente mais tarde.');
     }
 }
 
-// Função para carregar informações do lead
-async function carregarLeadInfo(leadId) {
-    try {
-        const response = await fetch(`http://localhost:8085/api/leads/${leadId}`);
-        const lead = await response.json();
+// Função para cadastrar o lead
+async function cadastrarLead() {
+    const nome = document.getElementById("nome").value;
+    const telefone = document.getElementById("telefone").value;
+    const email = document.getElementById("email").value;
 
-        document.getElementById("lead-nome").textContent = lead.nome;
-        document.getElementById("lead-email").textContent = lead.email;
-        document.getElementById("lead-telefone").textContent = lead.telefone;
+    document.getElementById("lead-nome").textContent = nome;
+    document.getElementById("lead-telefone").textContent = telefone;
+    document.getElementById("lead-email").textContent = email;
 
-    } catch (error) {
-        console.error("Erro ao carregar lead:", error);
-        alert('Erro ao carregar informações do lead.');
-    }
+    // Aqui você pode adicionar a lógica para enviar os dados do lead para o servidor, se necessário
 }
 
 // Função para matricular o aluno
-async function matricularAluno(leadId, cursoId, turmaId) {
-    const matriculaData = {
-        leadId: leadId,
+async function matricularAluno(cursoId, turmaId) {
+    const nome = document.getElementById("nome").value;
+    const telefone = document.getElementById("telefone").value;
+    const email = document.getElementById("email").value;
+
+    const alunoData = {
+        nome: nome,
+        telefone: telefone,
+        email: email,
         cursoId: cursoId,
-        turmaId: turmaId,
+        turmaId: turmaId
     };
 
     try {
-        const response = await fetch('http://localhost:8085/api/matriculas', {
+        const response = await fetch('http://localhost:8085/api/matricular', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/json'
             },
-            body: JSON.stringify(matriculaData),
+            body: JSON.stringify(alunoData)
         });
 
-        if (response.ok) {
-            document.getElementById("matricula-success").style.display = 'block';
-        } else {
-            alert('Erro ao matricular o aluno.');
+        if (!response.ok) {
+            throw new Error('Erro ao matricular aluno: ' + response.statusText);
         }
+
+        document.getElementById("matricula-success").style.display = 'block';
+
     } catch (error) {
         console.error("Erro ao matricular aluno:", error);
-        alert('Erro ao matricular aluno.');
+        alert('Erro ao matricular aluno. Tente novamente mais tarde.');
     }
 }

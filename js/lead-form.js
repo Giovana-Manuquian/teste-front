@@ -42,7 +42,7 @@ document.getElementById('lead-form').addEventListener('submit', async (event) =>
 
     try {
         // Enviar os dados para o backend usando fetch
-        const response = await fetch('http://localhost:8085/api/leads', {
+            const response = await fetch('http://localhost:8085/api/leads/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -75,7 +75,6 @@ document.getElementById('lead-form').addEventListener('submit', async (event) =>
 });
 
 // Função para carregar os cursos dinamicamente
-// Função para carregar os cursos dinamicamente
 async function carregarCursos() {
     // Exibir a mensagem de "Carregando..." enquanto os cursos não são carregados
     const cursoSelect = document.getElementById('curso');
@@ -90,7 +89,10 @@ async function carregarCursos() {
         }
 
         // Tenta processar a resposta como JSON, mas verifica antes se há conteúdo
-        const cursos = await response.json().catch(() => []);
+        const cursos = await response.json();
+
+        // Verificar se os dados dos cursos foram carregados corretamente
+        console.log(cursos);
 
         // Limpar opções anteriores (caso haja)
         cursoSelect.innerHTML = '';
@@ -120,7 +122,6 @@ async function carregarCursos() {
         cursoSelect.innerHTML = '<option>Erro ao carregar cursos</option>';
     }
 }
-
 
 // Chama a função para carregar os cursos ao carregar a página
 window.onload = carregarCursos;

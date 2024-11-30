@@ -1,53 +1,54 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Aluno</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Formulário de Captação de Leads</title>
 </head>
 <body>
-    <div class="container">
-        <h1>Matricular Aluno</h1>
+    <h1>Cadastro de Lead</h1>
+    <form id="lead-form">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" required><br><br>
 
-        <!-- Exibição dos dados do lead -->
-        <div id="lead-info">
-            <h2>Dados do Lead</h2>
-            <p><strong>Nome:</strong> <span id="lead-nome">Nome do Lead</span></p>
-            <p><strong>E-mail:</strong> <span id="lead-email">Email do Lead</span></p>
-            <p><strong>Telefone:</strong> <span id="lead-telefone">Telefone do Lead</span></p>
-        </div>
+        <label for="telefone">Telefone:</label>
+        <input type="tel" id="telefone" name="telefone" required><br><br>
 
-        <!-- Formulário de matrícula -->
-        <form id="matricula-form">
-            <h2>Informações da Matrícula</h2>
+        <label for="email">E-mail:</label>
+        <input type="email" id="email" name="email" required><br><br>
 
-            <!-- Curso -->
-            <label for="curso">Curso:</label>
-            <select id="curso" name="curso">
-                <option value="">Selecione um curso</option>
-            </select>
-            <br><br>
+        <label for="curso">Curso de Interesse:</label>
+        <select id="curso" name="curso" required>
+            <option value="">Selecione um curso</option>
+            <!-- As opções de curso serão carregadas dinamicamente aqui -->
+        </select><br><br>
 
-            <!-- Turma -->
-            <label for="turma">Turma:</label>
-            <select id="turma" name="turma">
-                <option value="">Selecione uma turma</option>
-            </select>
-            <br><br>
+        <label for="turma">Turma:</label>
+        <select id="turma" name="turma" required>
+            <option value="">Selecione uma turma</option>
+            <!-- As opções de turma serão carregadas dinamicamente aqui -->
+        </select><br><br>
 
-            <!-- Botão de Matrícula -->
-            <button type="submit">Matricular</button>
-        </form>
+        <button type="submit">Enviar</button>
+        <button type="button" id="matricular-button">Matricular</button>
+    </form>
 
-        <div id="loading" style="display:none;">Carregando...</div>
+    <!-- Indicador de Carregamento -->
+    <div id="loading" style="display: none;">Enviando...</div>
 
-        <!-- Mensagem de sucesso -->
-        <div id="matricula-success" style="display:none;">
-            <h3>Aluno matriculado com sucesso!</h3>
-        </div>
+    <h2>Dados do Lead</h2>
+    <div id="lead-info">
+        <p><strong>Nome:</strong> <span id="lead-nome"></span></p>
+        <p><strong>Email:</strong> <span id="lead-email"></span></p>
+        <p><strong>Telefone:</strong> <span id="lead-telefone"></span></p>
     </div>
 
-    <script src="matricula.js"></script>
+    <div id="matricula-success" style="display:none;">
+        Matrícula realizada com sucesso!
+    </div>
+
+    <a href="consulta-leads.html">Ir para Consulta de Leads</a>
+
+    <script src="js/lead-form.js"></script>
 </body>
 </html>
