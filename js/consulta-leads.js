@@ -51,19 +51,13 @@ async function carregarTurmas(cursoId) {
     const turmaSelect = document.getElementById("turma-select");
     turmaSelect.innerHTML = '<option>Carregando turmas...</option>';
 
-    console.log(`Carregando turmas para o curso ID: ${cursoId}`);
-
     try {
         const response = await fetch(`http://localhost:8085/api/turmas/curso/${cursoId}/turmas`);
-        console.log('Resposta da API para turmas:', response);
-
         if (!response.ok) {
             throw new Error('Erro ao carregar turmas');
         }
 
         const turmas = await response.json();
-        console.log('Turmas carregadas:', turmas);
-
         turmaSelect.innerHTML = '';
 
         if (turmas.length === 0) {
@@ -82,6 +76,55 @@ async function carregarTurmas(cursoId) {
     } catch (error) {
         console.error('Erro ao carregar turmas:', error);
         alert('Erro ao carregar turmas. Verifique a conexão com a API.');
+    }
+}
+
+async function matricularAluno(leadId) {
+    const cursoId = document.getElementById("curso-select").value;
+    const turmaId = document.getElementById("turma-select").value;
+
+    if (!cursoId || !turmaId) {
+        alert('Por favor, selecione um curso e uma turma.');
+        return;
+    }
+
+    // Obtenha as informações adicionais do aluno (por exemplo, nome, telefone, etc)
+    const nome = document.getElementById("nome-filtro").value; // Exemplo de como pegar o nome
+    const telefone = document.getElementById("telefone-filtro").value; // Exemplo para pegar o telefone
+    const email = document.getElementById("email-filtro").value; // Exemplo para pegar o email
+    const codigoMatricula = leadId; // Aqui você pode gerar ou pegar um código de matrícula único
+    const dataCadastro = new Date().toISOString(); // Exemplo de como pegar a data de cadastro
+
+    // Construa o objeto com todos os dados necessários
+    const alunoData = {
+        codigoMatricula,
+        nome,
+        telefone,
+        email,
+        dataCadastro,
+        curso: { id: cursoId },
+        turma: { id: turmaId }
+    };
+
+    try {
+        const response = await fetch(`http://localhost:8085/api/matriculas`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(alunoData)
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(errorText || 'Erro ao matricular aluno');
+        }
+
+        alert('Aluno matriculado com sucesso!');
+        document.getElementById("matricular-modal").style.display = "none";
+    } catch (error) {
+        console.error('Erro ao matricular aluno:', error);
+        alert('Erro ao matricular aluno. Verifique a conexão com a API.');
     }
 }
 
@@ -200,13 +243,31 @@ async function matricularAluno(leadId) {
         return;
     }
 
+    // Obtenha as informações adicionais do aluno
+    const nome = document.getElementById("nome-filtro").value; // Nome do lead
+    const telefone = document.getElementById("telefone-filtro") ? document.getElementById("telefone-filtro").value : ""; // Pega o telefone, se existir
+    const email = document.getElementById("email-filtro").value; // Email do lead
+    const codigoMatricula = await gerarCodigoMatricula(); // Gera um código de matrícula único
+    const dataCadastro = new Date().toISOString(); // Data de cadastro
+
+    // Construa o objeto com todos os dados necessários
+    const alunoData = {
+        codigoMatricula,
+        nome,
+        telefone,
+        email,
+        dataCadastro,
+        curso: { id: cursoId },
+        turma: { id: turmaId }
+    };
+
     try {
         const response = await fetch(`http://localhost:8085/api/matriculas`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ leadId, cursoId, turmaId })
+            body: JSON.stringify(alunoData)
         });
 
         if (!response.ok) {
@@ -220,4 +281,12 @@ async function matricularAluno(leadId) {
         console.error('Erro ao matricular aluno:', error);
         alert('Erro ao matricular aluno. Verifique a conexão com a API.');
     }
+}
+
+async function gerarCodigoMatricula() {
+    // Implemente a lógica para gerar um código de matrícula único
+    // Por exemplo, você pode incrementar um contador ou gerar um número aleatório
+    let ultimoCodigoMatricula = 0; // Variável para armazenar o último código de matrícula gerado
+    ultimoCodigoMatricula += 1; // Incrementa o código
+    return ultimoCodigoMatricula; // Retorna o novo código
 }

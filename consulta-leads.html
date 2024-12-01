@@ -1,26 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consulta de Leads</title>
-    <link rel="stylesheet" href="./css/consulta-lead.css"> <!-- Conexão com o CSS -->
+    <link rel="stylesheet" href="./css/consulta-lead.css"> <!-- Conectando o CSS -->
 </head>
 <body>
-    <h1>Consulta de Leads</h1>
+    <a href="lead.html">Voltar para Cadastro</a>
     <form id="filtro-form">
-        <label for="nome">Nome:</label>
-        <input type="text" id="nome-filtro" name="nome"><br><br>
-
-        <label for="email">E-mail:</label>
-        <input type="email" id="email-filtro" name="email"><br><br>
-
-        <label for="curso">Curso:</label>
-        <select id="curso-filtro" name="curso">
-            <option value="">Selecione um curso</option>
-            <!-- Cursos carregados dinamicamente -->
-        </select><br><br>
-
+        <h1>Consulta de Leads</h1> <!-- Título dentro do formulário -->
+        <div class="form-group">
+            <label for="nome-filtro">Nome:</label>
+            <input type="text" id="nome-filtro" name="nome">
+        </div>
+    
+        <div class="form-group">
+            <label for="email-filtro">E-mail:</label>
+            <input type="email" id="email-filtro" name="email">
+        </div>
+    
+        <div class="form-group">
+            <label for="curso-filtro">Curso:</label>
+            <select id="curso-filtro" name="curso">
+                <option value="">Selecione um curso</option>
+                <!-- Cursos carregados dinamicamente -->
+            </select>
+        </div>
+    
         <button type="submit">Filtrar</button>
     </form>
 
@@ -39,16 +45,25 @@
         </tbody>
     </table>
 
-    <a href="index.html">Voltar para Cadastro</a>
-
     <!-- Modal para Matricular -->
     <div id="matricular-modal" style="display: none;">
         <h2>Matricular Aluno</h2>
+        
+        <!-- O campo de código de matrícula foi removido -->
+        
         <label for="curso-select">Curso:</label>
-        <select id="curso-select"></select>
+        <select id="curso-select" required>
+            <option value="">Selecione um curso</option>
+            <!-- Os cursos serão carregados dinamicamente -->
+        </select><br><br>
+    
         <label for="turma-select">Turma:</label>
-        <select id="turma-select"></select>
-        <button id="confirmar-matricula">Confirmar Matrícula</button>
+        <select id="turma-select" required>
+            <option value="">Selecione uma turma</option>
+            <!-- As turmas serão carregadas dinamicamente -->
+        </select><br><br>
+    
+        <button id="confirmar-matricula">Confirmar</button>
         <button id="cancelar-matricula">Cancelar</button>
     </div>
 

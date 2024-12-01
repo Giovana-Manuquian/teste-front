@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+/*document.addEventListener("DOMContentLoaded", function () {
     // Carregar cursos
     carregarCursos();
 
@@ -19,6 +19,11 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         await matricularAluno(cursoId, turmaId);
+    });
+
+    // Evento para cancelar a matrícula
+    document.getElementById("cancelar-matricula").addEventListener("click", function () {
+        document.getElementById("matricular-modal").style.display = 'none'; // Fechar o modal
     });
 });
 
@@ -91,21 +96,21 @@ async function cadastrarLead() {
 }
 
 // Função para matricular o aluno
+// Função para matricular o aluno
 async function matricularAluno(cursoId, turmaId) {
-    const nome = document.getElementById("nome").value;
-    const telefone = document.getElementById("telefone").value;
-    const email = document.getElementById("email").value;
-
     const alunoData = {
-        nome: nome,
-        telefone: telefone,
-        email: email,
-        cursoId: cursoId,
-        turmaId: turmaId
+        cursoId: cursoId, // Usando 'cursoId'
+        turmaId: turmaId, // Usando 'turmaId'
+        data_cadastro: "2023-10-10", // Adicione a data de cadastro aqui
+        email: document.getElementById("email").value, // Pegando o email do DOM
+        nome: document.getElementById("nome").value, // Pegando o nome do DOM
+        telefone: document.getElementById("telefone").value // Pegando o telefone do DOM
     };
 
+    console.log(alunoData); // Verifique se os dados estão corretos antes de enviar
+
     try {
-        const response = await fetch('http://localhost:8085/api/matricular', {
+        const response = await fetch('/api/matriculas/confirmar', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -113,14 +118,16 @@ async function matricularAluno(cursoId, turmaId) {
             body: JSON.stringify(alunoData)
         });
 
-        if (!response.ok) {
-            throw new Error('Erro ao matricular aluno: ' + response.statusText);
+        if (response.ok) {
+            const novoAluno = await response.json();
+            console.log('Aluno matriculado com sucesso:', novoAluno);
+        } else {
+            const errorText = await response.text();
+            console.error('Erro ao matricular aluno:', response.statusText, errorText);
         }
-
-        document.getElementById("matricula-success").style.display = 'block';
-
     } catch (error) {
-        console.error("Erro ao matricular aluno:", error);
-        alert('Erro ao matricular aluno. Tente novamente mais tarde.');
+        console.error('Erro na requisição:', error);
     }
-}
+
+    
+} */
