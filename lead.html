@@ -1,46 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Define o tipo de documento e linguagem como inglês -->
     <meta charset="UTF-8">
+    <!-- Garante que a página será exibida corretamente em dispositivos móveis -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulário de Captação de Leads</title>
+    <!-- Inclui o arquivo de estilo CSS para a página -->
     <link rel="stylesheet" href="./css/lead.css"> 
 </head>
 <body>
     <header>
+        <!-- Link para uma página de consulta de leads -->
         <a href="consulta-leads.html" class="consulta-link">Ir para Consulta de Leads</a>
     </header>
     
     <div class="container">
+        <!-- Div para a imagem decorativa ou ilustrativa -->
         <div class="image-container">
-            <img src="./assets/1.png" alt="Descrição da Imagem">
+            <img src="./assets/1.png" alt="imagem-form-lead">
         </div>
         <div class="form-container">
+            <!-- Título da seção de cadastro -->
             <h2>Cadastro de Lead</h2>
+            <!-- Formulário para cadastro dos dados do lead -->
             <form id="lead-form">
+                <!-- Campo para o nome -->
                 <label for="nome">Nome:</label>
                 <input type="text" id="nome" name="nome" required><br><br>
 
+                <!-- Campo para o telefone -->
                 <label for="telefone">Telefone:</label>
                 <input type="tel" id="telefone" name="telefone" required><br><br>
 
+                <!-- Campo para o e-mail -->
                 <label for="email">E-mail:</label>
                 <input type="email" id="email" name="email" required><br><br>
 
+                <!-- Campo para selecionar o curso de interesse -->
                 <label for="curso">Curso de Interesse:</label>
                 <select id="curso" name="curso" required>
                     <option value="">Selecione um curso</option>
                     <!-- As opções de curso serão carregadas dinamicamente aqui -->
                 </select><br><br>
 
+                <!-- Botão para enviar o formulário -->
                 <button type="submit">Enviar</button>
             </form>
 
-            <!-- Indicador de Carregamento -->
+            <!-- Indicador de carregamento enquanto o formulário é enviado -->
             <div id="loading" style="display: none;">Enviando...</div>
         </div>
     </div>
 
+    <!-- Inclui o arquivo JavaScript para manipular o comportamento do formulário -->
     <script src="js/lead-form.js"></script>
 </body>
 </html>
