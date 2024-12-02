@@ -2,37 +2,49 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <!-- Define o conjunto de caracteres da página para UTF-8, suportando caracteres especiais em português -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/consulta-lead.css"> <!-- Conectando o CSS -->
+    <!-- Configura a página para ser responsiva, ajustando o conteúdo ao tamanho da tela -->
+    <link rel="stylesheet" href="./css/consulta-lead.css"> <!-- Conectando o arquivo de estilo CSS -->
 </head>
 <body>
+    <!-- Link para voltar para a página de cadastro de leads -->
     <a href="lead.html">Voltar para Cadastro</a>
+
+    <!-- Formulário para filtrar os leads -->
     <form id="filtro-form">
-        <h1>Consulta de Leads</h1> <!-- Título dentro do formulário -->
+        <h1>Consulta de Leads</h1> <!-- Título do formulário -->
+        
+        <!-- Campo de entrada para o nome do lead -->
         <div class="form-group">
             <label for="nome-filtro">Nome:</label>
             <input type="text" id="nome-filtro" name="nome">
         </div>
     
+        <!-- Campo de entrada para o e-mail do lead -->
         <div class="form-group">
             <label for="email-filtro">E-mail:</label>
             <input type="email" id="email-filtro" name="email">
         </div>
     
+        <!-- Campo de seleção de curso do lead -->
         <div class="form-group">
             <label for="curso-filtro">Curso:</label>
             <select id="curso-filtro" name="curso">
                 <option value="">Selecione um curso</option>
-                <!-- Cursos carregados dinamicamente -->
+                <!-- As opções de cursos serão carregadas dinamicamente aqui -->
             </select>
         </div>
     
+        <!-- Botão para submeter o filtro -->
         <button type="submit">Filtrar</button>
     </form>
 
+    <!-- Tabela para exibir os leads filtrados -->
     <table id="leads-table" border="1" style="width: 100%; margin-top: 20px;">
         <thead>
             <tr>
+                <!-- Cabeçalhos da tabela -->
                 <th>ID</th>
                 <th>Nome</th>
                 <th>E-mail</th>
@@ -41,32 +53,34 @@
             </tr>
         </thead>
         <tbody>
-            <!-- Dados dos leads filtrados serão inseridos aqui -->
+            <!-- As linhas com os dados dos leads filtrados serão inseridas aqui -->
         </tbody>
     </table>
 
-    <!-- Modal para Matricular -->
+    <!-- Modal para matricular um aluno -->
     <div id="matricular-modal" style="display: none;">
         <h2>Matricular Aluno</h2>
         
-        <!-- O campo de código de matrícula foi removido -->
-        
+        <!-- Campo de seleção de curso para a matrícula -->
         <label for="curso-select">Curso:</label>
         <select id="curso-select" required>
             <option value="">Selecione um curso</option>
-            <!-- Os cursos serão carregados dinamicamente -->
+            <!-- Os cursos serão carregados dinamicamente aqui -->
         </select><br><br>
     
+        <!-- Campo de seleção de turma para a matrícula -->
         <label for="turma-select">Turma:</label>
         <select id="turma-select" required>
             <option value="">Selecione uma turma</option>
-            <!-- As turmas serão carregadas dinamicamente -->
+            <!-- As turmas serão carregadas dinamicamente aqui -->
         </select><br><br>
     
+        <!-- Botões para confirmar ou cancelar a matrícula -->
         <button id="confirmar-matricula">Confirmar</button>
         <button id="cancelar-matricula">Cancelar</button>
     </div>
 
+    <!-- Inclui o arquivo JavaScript que gerencia a interação da página -->
     <script src="js/consulta-leads.js"></script>
 </body>
 </html>
